@@ -1,0 +1,82 @@
+ID: BDM
+_schema-version: "2.1"
+parameters:
+  deploy_mode: html5-repo
+version: 0.0.1
+modules:
+  - name: BDM-approuter
+    type: approuter.nodejs
+    path: demo-approuter
+    properties:
+      SEND_XFRAMEOPTIONS: false
+    parameters:
+      disk-quota: 512M
+      memory: 512M
+    requires:
+      - name: BDM_html5_repo_runtime
+      - name: com-bdm-xsuaa
+      - name: BDM_Demo
+      - name: BDM_UserNode_api
+        group: destinations
+        properties:
+          name: BDM_UserNode_api
+          url: "~{url}"
+          forwardAuthToken: true
+  - name: BDM_ui_deployer
+    type: com.sap.html5.application-content
+    path: Demo_ui_deployer
+    requires:
+      - name: BDM_html5_repo_host
+    build-parameters:
+      requires:
+        - name: TestApp
+          artifacts:
+            - "./*"
+          target-path: resources/TestApp
+  - name: TestApp
+    type: html5
+    path: TestApp
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install -f
+      supported-platforms: []
+      build-result: build
+  - name: BDM_UserNode
+    type: nodejs
+    path: UserNode
+    parameters:
+      disk-quota: 256M
+      memory: 128M
+    provides:
+      - name: BDM_UserNode_api
+        properties:
+          url: "${default-url}"
+    properties:
+      UAA_SERVICE_NAME: com-bdm-xsuaa
+    requires:
+      - name: com-bdm-xsuaa
+resources:
+  - name: BDM_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: BDM_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+      config:
+        sizeLimit: 100
+    type: org.cloudfoundry.managed-service
+  - name: com-bdm-xsuaa
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+    type: org.cloudfoundry.managed-service
+  - name: BDM_Demo
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service

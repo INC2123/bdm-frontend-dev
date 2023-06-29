@@ -1,0 +1,8 @@
+{
+    "realm": "DigitalApplicationSuite",
+    "auth-server-url": "https://keycloak.cherryworkproducts.com/auth/",
+    "ssl-required": "external",
+    "resource": "workrules",
+    "public-client": true,
+    "confidential-port": 0
+    }

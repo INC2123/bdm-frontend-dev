@@ -1,0 +1,19 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    
+    {
+      "source": "^/user(.*)$",
+      "target": "/user/",
+      "destination": "WR_UserNode_api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^(.*)",
+      "target": "BDMApplication/$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}
