@@ -6,8 +6,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    
     "@sap/cds": "^4",
     "express": "^4"
+    
   },
   "devDependencies": {
     "sqlite3": "^5"

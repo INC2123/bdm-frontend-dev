@@ -1,8 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.f811783c.css",
-    "main.js": "/static/js/main.7f4b6418.js",
-    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "main.js": "/static/js/main.314d3f7b.js",
     "static/media/CherryworkLogo.svg": "/static/media/CherryworkLogo.d0ad5d92e884df1cf91d117b01f38be9.svg",
     "static/media/BDMLogo.svg": "/static/media/BDMLogo.d216ff0b90f6e7b58c395349beead6b3.svg",
     "static/media/roboto-latin-400-normal.woff2": "/static/media/roboto-latin-400-normal.b009a76ad6afe4ebd301.woff2",
@@ -24,11 +23,10 @@
     "static/media/clockicon.svg": "/static/media/clockicon.fded13e99b9a4ca4f3183dfd3f911d8b.svg",
     "index.html": "/index.html",
     "main.f811783c.css.map": "/static/css/main.f811783c.css.map",
-    "main.7f4b6418.js.map": "/static/js/main.7f4b6418.js.map",
-    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+    "main.314d3f7b.js.map": "/static/js/main.314d3f7b.js.map"
   },
   "entrypoints": [
     "static/css/main.f811783c.css",
-    "static/js/main.7f4b6418.js"
+    "static/js/main.314d3f7b.js"
   ]
 }

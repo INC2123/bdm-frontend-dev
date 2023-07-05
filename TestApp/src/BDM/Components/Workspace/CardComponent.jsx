@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => {
       height: "116px",
       borderRadius: "10px",
       boxShadow: "0px 2px 3px rgba(169, 169, 169, 0.25)",
-      marginTop: "10px"
+      marginTop: "10px",
     },
-  
+
     clauseTitle: {
       fontSize: "15px",
       fontWeight: "normal",
@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => {
       fontWeight: 500,
       lineHeight: "18px",
       display: "inline",
-      marginLeft:"31px",
-      marginTop:"15px",
+      marginLeft: "31px",
+      marginTop: "15px",
     },
     clauseDescriptionText: {
       fontSize: "15px",
@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => {
       color: "#424242",
       width: "768px",
       height: "18px",
-      marginLeft:"31px",
-      marginTop:"36px",
+      marginLeft: "31px",
+      marginTop: "36px",
       [theme.breakpoints.down("xl")]: {
         width: "1920px",
       },
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => {
         width: "960px",
       },
     },
-  
+
     statusChip: {
       boxSizing: "border-box",
       position: "absolute",
@@ -89,46 +89,25 @@ const CardComponent = ({
   clause,
   category,
   tags,
+  status,
   description,
   date,
   version,
 }) => {
   const classes = useStyles();
 
-  //   *fetch clause from backend*
-  //   const[clause,setClause] = useState(null);
-
-  //   useEffect(() =>{
-  //     const fetchClause = async () =>{
-  //         try{
-  //             const response = await fetch('put backend url');
-  //             const data = await response.json();
-  //             setClause(data.clause);
-  //             }
-  //             catch(e){
-  //                 console.e('error fetching clause:',error);
-  //                 }
-
-  //         };
-  //         fetchClause();
-  //     },[]);
-
   return (
     <Card className={classes.clauseCard}>
       <CardContent>
         <div>
-          <Typography className={classes.clauseTitle}>
-            {clause}
-            {/* {clause.name} */}
-          </Typography>
+          <Typography className={classes.clauseTitle}>{clause}</Typography>
           <Typography className={classes.clauseDescriptionText}>
             {description}
-            {/* {clause.description} */}
           </Typography>
         </div>
         <div className={classes.statusChip}>
           {/* <Typography className={classes.statusChip} variant="body1" component="p"> */}
-          <CustomChip status="Rework" />
+          <CustomChip status={status} />
 
           {/* backend wise */}
           {/* {clause && <CustomChip status={clause.status}/> */}
@@ -142,10 +121,11 @@ const CardComponent = ({
             ))}
           </div>
           <div className={classes.container}>
-            <span style={{marginRight:'66px'}}>
+            <span style={{ marginRight: "66px" }}>
               <Category category={category} />
             </span>
-            <span style={{marginRight:'29.5px'}}>{date}</span> {/* {clause.createdAt} */}
+            <span style={{ marginRight: "29.5px" }}>{date}</span>{" "}
+            {/* {clause.createdAt} */}
             <span>{version}</span>
           </div>
         </div>

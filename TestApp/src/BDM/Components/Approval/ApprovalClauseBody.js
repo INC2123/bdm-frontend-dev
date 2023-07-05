@@ -1,6 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import { makeStyles } from "@mui/styles";
+import ApprovalHighlighter from "./ApprovalHighlighter";
 
 const useStyles = makeStyles((theme) => ({
   approval_body: {
@@ -34,8 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ApprovalClauseBody() {
+export default function ApprovalClauseBody(props) {
   const classes = useStyles();
+  const text =
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid fefef e ef er e e reeeeee eeeeeeeee trre e eeeeeeeeeeeee rer e   eeet     errrrrrrrr e         errerere         rerere";
   return (
     <Stack className={classes.approval_body}>
       <Stack className={classes.approval_clause_name}>
@@ -43,18 +46,10 @@ export default function ApprovalClauseBody() {
       </Stack>
       <Stack className={classes.approval_clause_body}>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid,
-          velit? Et repellat nemo nulla quaerat excepturi sequi totam sapiente
-          magni incidunt, corrupti porro nam quis fuga, distinctio illo
-          possimus, beatae fugiat. Rerum quas itaque at enim voluptas quam odit,
-          facilis voluptate. Consequatur molestiae expedita magni consectetur
-          voluptatem natus, exercitationem assumenda, nam harum corporis
-          suscipit consequuntur aliquam tenetur sed laboriosam esse qui. Nemo
-          deserunt atque consequuntur repudiandae non corporis, quasi, sed
-          commodi laudantium, repellat nesciunt distinctio pariatur harum
-          deleniti optio minus officia. Molestiae, officia maiores? Ullam, at
-          tempore laboriosam quisquam labore, atque ratione praesentium
-          necessitatibus rem porro soluta quibusdam corporis vero?
+          <ApprovalHighlighter
+            text={text}
+            setCombinedObject={props.setCombinedObject}
+          />
         </p>
       </Stack>
     </Stack>

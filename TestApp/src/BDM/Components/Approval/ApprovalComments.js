@@ -5,12 +5,12 @@ import { useState } from "react";
 import "@fontsource/roboto";
 import CloseIcon from "@mui/icons-material/Close";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import Box from "@mui/material/Box";
-import MessageIcon from "../../Assets/MessageIcon";
 import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { setShowComments } from "../../redux/reducers/actions";
 
 const useStyles = makeStyles((theme) => ({
   approval_comments: {
@@ -33,17 +33,60 @@ const useStyles = makeStyles((theme) => ({
     height: "fitContent",
     paddingBottom: "2rem",
   },
+  approval_comments_box_header: {
+    fontSize: "1rem",
+    fontFamily: "Roboto",
+    fontWeight: "600",
+    borderBottom: "1px dashed #E0E0E0",
+    marginTop: "1rem",
+    padding: "0.5rem",
+  },
+  approval_comments_box_body_comment: {
+    color: "#A4A4A4",
+    fontSize: "0.875rem",
+    padding: "1.5rem",
+  },
+  approval_comments_box_body_name: {
+    fontSize: "0.75rem !important",
+    fontWeight: "700 !important",
+    color: "#000000 !important",
+  },
+  approval_comments_box_body_date: {
+    fontSize: "0.6rem !important",
+    fontWeight: "400 !important",
+    color: "#A4A4A4 !important",
+    marginLeft: "0.5rem !important",
+    marginTop: "0.1rem !important",
+  },
+  approval_comments_box_body_textfield: {
+    width: "100%",
+    fontSize: "0.75rem !important",
+    border: "0.5px #A4A4A4",
+    backgroundColor: "#FAFAFA",
+    borderRadius: "0.313rem",
+  },
 }));
 
-export default function ApprovalComments() {
+export default function ApprovalComments(props) {
+  const showComments = useSelector(
+    (state) => state.approvalComments.showComments
+  );
+  const isHighlighted = useSelector(
+    (state) => state.approvalComments.isHighlighted
+  );
+  const commentCount = useSelector(
+    (state) => state.approvalComments.commentCount
+  );
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [showComments, setShowComments] = useState(true);
   const handleCommentsClick = () => {
-    setShowComments(false);
+    dispatch(setShowComments(false));
   };
   const handleCloseClick = () => {
-    setShowComments(true);
+    dispatch(setShowComments(true));
   };
+  const [containt, setContaint] = useState("");
+  console.log(containt);
 
   return (
     <Stack className={classes.approval_comments}>
@@ -58,83 +101,81 @@ export default function ApprovalComments() {
       ) : (
         <Stack className={classes.approval_comments_box}>
           <Stack
+            className={classes.approval_comments_box_header}
             direction="row"
             justifyContent="space-between"
-            sx={{
-              fontSize: "1rem",
-              // padding: "1rem",
-              fontFamily: "Roboto",
-              fontWeight: "600",
-              borderBottom: "1px dashed #E0E0E0",
-            }}
           >
             <Stack sx={{ paddingTop: "0.5rem" }}>Comments</Stack>
             <Stack>
               <Button onClick={handleCloseClick}>
-                <CloseIcon sx={{ color: "#757575", fontSize: "large" }} />
+                <CloseIcon sx={{ color: "#000", fontSize: "large" }} />
               </Button>
             </Stack>
           </Stack>
-          <Stack
-            direction="row"
-            sx={{ color: "#A4A4A4", fontSize: "0.875rem" }}
-          >
-            No Comments to show.
-          </Stack>
-
-          <Stack direction="row" display="flex" justifyContent="flex-start">
+          {isHighlighted ? (
             <Stack
-              direction="row"
-              display="flex"
+              className={classes.approval_comments_box_body_comment}
               alignItems="center"
-              justifyContent="flex-start"
-              sx={{ gap: "0.5rem" }}
-              flexGrow="1"
             >
-              <Avatar
-                sx={{
-                  height: "1.8rem",
-                  width: "1.8rem",
-                  marginLeft: "1rem",
-                }}
-                alt="Remy Sharp"
-                src="https://d1hb67vd7r4m10.cloudfront.net/images/easyblog_articles/89/b2ap3_thumbnail_ee72093c-3c01-433a-8d25-701cca06c975.jpg"
-              />
-              <Typography
-                sx={{
-                  fontSize: "0.75rem",
-                  fontWeight: "700",
-                  color: "#000000",
-                }}
-              >
-                Sai Shree
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "0.688rem",
-                  fontWeight: "400",
-                  color: "#A4A4A4",
-                }}
-              >
-                12:54 Today
-              </Typography>
+              No Comments to show.
             </Stack>
-          </Stack>
+          ) : (
+            Object.keys(props.combinedObject).map((index) => (
+              <Stack key={index} className="approval_repeat_comment">
+                <Stack
+                  direction="row"
+                  sx={{
+                    margin: "1rem",
+                  }}
+                >
+                  <Stack>
+                    <Avatar
+                      sx={{
+                        height: "1.5rem",
+                        width: "1.5rem",
+                      }}
+                      alt="Remy Sharp"
+                      src="https://d1hb67vd7r4m10.cloudfront.net/images/easyblog_articles/89/b2ap3_thumbnail_ee72093c-3c01-433a-8d25-701cca06c975.jpg"
+                    />
+                  </Stack>
+                  <Stack sx={{ marginLeft: "0.5rem" }}>
+                    <Stack direction="row">
+                      <Typography
+                        className={classes.approval_comments_box_body_name}
+                      >
+                        Sai Shree
+                      </Typography>
 
-          <Stack>
-            <TextField
-              variant="outlined"
-              multiline
-              rows={4}
-              sx={{
-                width: "70%",
-                fontSize: "0.75rem",
-                border: "0.5px solid #A4A4A4",
-                backgroundColor: "#FAFAFA",
-                borderRadius: "0.313rem",
-              }}
-            />
-          </Stack>
+                      <Typography
+                        className={classes.approval_comments_box_body_date}
+                      >
+                        12:54 Today
+                      </Typography>
+                    </Stack>
+                    <Stack>
+                      <TextField
+                        value={
+                          props.combinedObject[index]
+                            ? props.combinedObject[index]
+                            : ""
+                        }
+                        onChange={(e) =>
+                          props.setCombinedObject((prev) => ({
+                            ...prev,
+                            [index]: e.target.value,
+                          }))
+                        }
+                        variant="outlined"
+                        multiline
+                        rows={2}
+                        className={classes.approval_comments_box_body_textfield}
+                      />
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+            ))
+          )}
         </Stack>
       )}
     </Stack>

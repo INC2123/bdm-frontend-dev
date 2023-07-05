@@ -8,6 +8,7 @@ import WorkspacesOutlinedIcon from "@mui/icons-material/WorkspacesOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import MinimizeIcon from "@mui/icons-material/Minimize";
 import InsightsOutlinedIcon from "@mui/icons-material/InsightsOutlined";
+import { useNavigate } from "react-router-dom";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
@@ -21,9 +22,11 @@ const useStyles = makeStyles((theme) => ({
     gap: "16px",
     isolation: "isolate",
     position: "absolute",
-    width: "72px",
+    // width: "72px",
+    width: "67px",
     height: "963px",
-    marginTop: "64px",
+    // marginTop: "64px",
+    marginTop: "48px",
     color: "#fff",
     backgroundColor: "#082940",
   },
@@ -59,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SideBar() {
   const classes = useStyles();
-
+  const navigate = useNavigate();
   return (
-    <Grid>
+    <Stack>
       <Stack className={classes.SidebarWrapper}>
         {/* <Item> */}
         <IconButton color="inherit" aria-label="menu">
@@ -82,7 +85,7 @@ export default function SideBar() {
         <Stack className={classes.DividerWrapper}></Stack>
 
         <Stack className={classes.IconLabelContainer}>
-          <IconButton color="inherit" aria-label="home">
+          <IconButton color="inherit" aria-label="home" onClick={() => navigate("/")}>
             <HomeOutlinedIcon />
           </IconButton>
           <Typography
@@ -115,14 +118,15 @@ export default function SideBar() {
         </Stack>
 
         <Stack className={classes.IconLabelContainer}>
-          <IconButton color="inherit" aria-label="home">
+          <IconButton color="inherit" aria-label="home" onClick={() => navigate("/ApprovalScreen")}>
             <AdminPanelSettingsOutlinedIcon />
           </IconButton>
           <Typography
             className={classes.IconLabel}
           >
-            Admin
-            Console
+            {/* Admin
+            Console */}
+            Approval screen
           </Typography>
         </Stack>
 
@@ -137,6 +141,6 @@ export default function SideBar() {
           </Typography>
         </Stack>
       </Stack>
-    </Grid>
+    </Stack>
   );
 }

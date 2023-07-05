@@ -27,21 +27,21 @@ const CustomChip = ({ status }) => {
 
   const getIconAndLabel = () => {
     switch (status) {
-      case "Approved":
+      case "APPROVED":
         return {
           icon: <CheckCircleRoundedIcon style={{ color: "#26A933" }} />,
           label: "Approved",
           color: "#B1DCB6",
           borderColor: "#E8FAEA",
         };
-      case "Rework":
+      case "PENDING":
         return {
           icon: <SmsFailedIcon style={{ color: "#F6594E" }} />,
-          label: "Rework",
+          label: "Pending",
           color: "#FFD3D3",
           borderColor: "#FFEEEE",
         };
-      case "InProgress":
+      case "INPROGRESS":
         return {
           icon: (
             <SvgIcon

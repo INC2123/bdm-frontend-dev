@@ -40,12 +40,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ApproversButtons() {
+export default function ApproversButtons(props) {
   const classes = useStyles();
+
+  const handleReworkClick = () => {
+    props.onReworkClick();
+  };
   return (
     <div>
       <Button
         className={classes.approval_btn_rework}
+        onClick={handleReworkClick}
+        // disabled={props.numHighlightedTexts === 0}
         sx={{
           marginRight: "1rem",
           border: "1px solid #082940",

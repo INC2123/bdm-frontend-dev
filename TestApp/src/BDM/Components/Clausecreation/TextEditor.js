@@ -1,7 +1,6 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MUIRichTextEditor from "mui-rte";
-
+// import MUIRichTextEditor from "mui-rte";
 
 const myTheme = createTheme({
   overrides: {
@@ -15,7 +14,7 @@ const myTheme = createTheme({
         borderRadius: "4px", // Optional: Set border radius for a rounded border
         width: "911px", // Set width of the editor container
         height: "174px", // Set height of the editor container
-        overflowY:"scroll",
+        overflowY: "scroll",
       },
       editor: {
         backgroundColor: "#FFFFFF", // Set the color inside the border to white
@@ -48,16 +47,15 @@ const TextEditor = ({ onContentChange }) => {
   return (
     <div>
       <ThemeProvider theme={myTheme}>
-        <MUIRichTextEditor
+        {/* <MUIRichTextEditor
           className="overrides"
           label="Type something here..."
           inlineToolbar={true}
           onChange={handleContentChange} // Call the callback function when the content changes
-        />
+        /> */}
       </ThemeProvider>
     </div>
   );
 };
-
 
 export default TextEditor;
