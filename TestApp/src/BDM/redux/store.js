@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import approvalCommentsReducer from "./reducers/approvalCommentsReducer";
+import reducers from "./reducers";
 
-export const store = configureStore({
-  //   reducer: reducers,
-  reducer: {
-    approvalComments: approvalCommentsReducer,
-  },
-});
+export const store =  configureStore({
+    reducer : reducers,
+})

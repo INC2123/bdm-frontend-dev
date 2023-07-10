@@ -72,58 +72,52 @@ export default function SideBar() {
         </IconButton>
 
         <Stack className={classes.IconLabelContainer}>
-          <IconButton color="inherit" aria-label="home">
+          <IconButton
+            color="inherit"
+            aria-label="home"
+            onClick={() => navigate("/EditorHighlighter")}
+          >
             <AddCircleOutlineIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
-            Create
-          </Typography>
+          <Typography className={classes.IconLabel}>Create</Typography>
         </Stack>
 
         <Stack className={classes.DividerWrapper}></Stack>
 
         <Stack className={classes.IconLabelContainer}>
-          <IconButton color="inherit" aria-label="home" onClick={() => navigate("/")}>
+          <IconButton
+            color="inherit"
+            aria-label="home"
+            onClick={() => navigate("/")}
+          >
             <HomeOutlinedIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
-            Home
-          </Typography>
+          <Typography className={classes.IconLabel}>Home</Typography>
         </Stack>
 
         <Stack className={classes.IconLabelContainer}>
           <IconButton color="inherit" aria-label="home">
             <WorkspacesOutlinedIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
-           Workspace
-          </Typography>
+          <Typography className={classes.IconLabel}>Workspace</Typography>
         </Stack>
 
         <Stack className={classes.IconLabelContainer}>
           <IconButton color="inherit" aria-label="home">
             <InsightsOutlinedIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
-           Insights
-          </Typography>
+          <Typography className={classes.IconLabel}>Insights</Typography>
         </Stack>
 
         <Stack className={classes.IconLabelContainer}>
-          <IconButton color="inherit" aria-label="home" onClick={() => navigate("/ApprovalScreen")}>
+          <IconButton
+            color="inherit"
+            aria-label="home"
+            onClick={() => navigate("/ApprovalScreen")}
+          >
             <AdminPanelSettingsOutlinedIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
+          <Typography className={classes.IconLabel}>
             {/* Admin
             Console */}
             Approval screen
@@ -134,11 +128,7 @@ export default function SideBar() {
           <IconButton color="inherit" aria-label="home">
             <SettingsOutlinedIcon />
           </IconButton>
-          <Typography
-            className={classes.IconLabel}
-          >
-            Settings
-          </Typography>
+          <Typography className={classes.IconLabel}>Settings</Typography>
         </Stack>
       </Stack>
     </Stack>

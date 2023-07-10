@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CardComponent from "./CardComponent";
+import { setBearer } from "../../redux/reducers/keycloakReducer";
+import { useSelector } from "react-redux";
+import { doAjax } from "../../Services/serviceRequest";
 
 const Card = () => {
   // const cardData = [
@@ -57,26 +60,42 @@ const Card = () => {
   // ];
 
   const [cardData, setCardData] = useState([]);
-
+  // const bearerState = useSelector((state) => state.keycloakReducer).bearer;
+  // console.log(bearerState);
   useEffect(() => {
-    const fetchClause = async () => {
-      try {
-        const response = await fetch(
-          "https://cw-bdm.cfapps.eu10-004.hana.ondemand.com/api/clause",
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJJNExzTXlreEQ4czlXdFhOLUxaTXoxbDd3SmxfTmZmNGN5WkM5MEpZbklVIn0.eyJleHAiOjE2ODg1NTcxNDcsImlhdCI6MTY4ODU0OTk0NywianRpIjoiM2ZlOTJjOGYtNThjMS00OTU3LTk5NDktNjkyZWEwYzY3NzBlIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5jaGVycnl3b3JrcHJvZHVjdHMuY29tL2F1dGgvcmVhbG1zL0RpZ2l0YWxBcHBsaWNhdGlvblN1aXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjBkOGYxMGYzLWY3ODYtNDU1OS1iMGQzLTdmMTUzMWM5MDJjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6IndvcmthY2Nlc3MiLCJzZXNzaW9uX3N0YXRlIjoiNzhkOGYyOTQtZTM4Ny00NTU4LThhMWEtMGJkMDA1ZGU3ODg5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3dvcmthY2Nlc3MtZnJvbnRlbmQuYXp1cmV3ZWJzaXRlcy5uZXQiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlVTRVJfREVGSU5JVElPTl9LRVlfdXNlci1hZG1pbiIsImRlZmF1bHQtcm9sZXMtaW50ZWxsaWdlbnQgdGFzayBtYW5hZ2VtZW50IiwiaXRtLWFkbWluIiwiYWNjZXNzLWlkbSIsIml0bS1kZWZhdWx0Iiwib2ZmbGluZV9hY2Nlc3MiLCJhY2Nlc3MtdGFzayIsImFjY2Vzcy1tb2RlbGVyIiwidW1hX2F1dGhvcml6YXRpb24iLCJhY2Nlc3MtYWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI3OGQ4ZjI5NC1lMzg3LTQ1NTgtOGExYS0wYmQwMDVkZTc4ODkiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJTeXN0ZW0gVXNlciIsInBpZCI6IlAwMDA5OTkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZHVtbXkudG9rZW5AaW5jdHVyZS5jb20ifQ.WcKF-8TZrfX2Zic_6166Thqn4BZb3-BhNUPA0xMslI-Ey9CHZEqqzxMQYdUbvbJaPDlsF-n0EB05vwivxBWCQnNH24PX6-fjkbwrsVoo8d27GkgCJLHzxHgEAhTt80TxaD85Yifej7KGrMHGoKXP00HLfaOCHAcr2Kgrq1D_UpyK8lRwYlQCPMWf7LDKsmmAPkYzTcXDzfrI2IqMwBbjzLCD1M0i5geUoXrF-SWafuLokE3IDPGvYlYSSomq7YPHsJv6S8FmBoCTxTK2QsBONVQOCDMYr5Ed9sulZo0bInpiWu5Nph4Fy9sDL4FtL0Yexc79WDRzF_HuPHir1FuRxQ",
-            },
-          }
-        );
-        const data = await response.json();
-        setCardData(data);
-      } catch (e) {
-        console.e("error fetching clause:", e);
+    // const fetchClause = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "/BDMServices/api/clause",
+    //       {
+    //         headers: {
+    //           Authorization:
+    //             "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJJNExzTXlreEQ4czlXdFhOLUxaTXoxbDd3SmxfTmZmNGN5WkM5MEpZbklVIn0.eyJleHAiOjE2ODg1NTcxNDcsImlhdCI6MTY4ODU0OTk0NywianRpIjoiM2ZlOTJjOGYtNThjMS00OTU3LTk5NDktNjkyZWEwYzY3NzBlIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5jaGVycnl3b3JrcHJvZHVjdHMuY29tL2F1dGgvcmVhbG1zL0RpZ2l0YWxBcHBsaWNhdGlvblN1aXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjBkOGYxMGYzLWY3ODYtNDU1OS1iMGQzLTdmMTUzMWM5MDJjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6IndvcmthY2Nlc3MiLCJzZXNzaW9uX3N0YXRlIjoiNzhkOGYyOTQtZTM4Ny00NTU4LThhMWEtMGJkMDA1ZGU3ODg5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3dvcmthY2Nlc3MtZnJvbnRlbmQuYXp1cmV3ZWJzaXRlcy5uZXQiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlVTRVJfREVGSU5JVElPTl9LRVlfdXNlci1hZG1pbiIsImRlZmF1bHQtcm9sZXMtaW50ZWxsaWdlbnQgdGFzayBtYW5hZ2VtZW50IiwiaXRtLWFkbWluIiwiYWNjZXNzLWlkbSIsIml0bS1kZWZhdWx0Iiwib2ZmbGluZV9hY2Nlc3MiLCJhY2Nlc3MtdGFzayIsImFjY2Vzcy1tb2RlbGVyIiwidW1hX2F1dGhvcml6YXRpb24iLCJhY2Nlc3MtYWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI3OGQ4ZjI5NC1lMzg3LTQ1NTgtOGExYS0wYmQwMDVkZTc4ODkiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJTeXN0ZW0gVXNlciIsInBpZCI6IlAwMDA5OTkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZHVtbXkudG9rZW5AaW5jdHVyZS5jb20ifQ.WcKF-8TZrfX2Zic_6166Thqn4BZb3-BhNUPA0xMslI-Ey9CHZEqqzxMQYdUbvbJaPDlsF-n0EB05vwivxBWCQnNH24PX6-fjkbwrsVoo8d27GkgCJLHzxHgEAhTt80TxaD85Yifej7KGrMHGoKXP00HLfaOCHAcr2Kgrq1D_UpyK8lRwYlQCPMWf7LDKsmmAPkYzTcXDzfrI2IqMwBbjzLCD1M0i5geUoXrF-SWafuLokE3IDPGvYlYSSomq7YPHsJv6S8FmBoCTxTK2QsBONVQOCDMYr5Ed9sulZo0bInpiWu5Nph4Fy9sDL4FtL0Yexc79WDRzF_HuPHir1FuRxQ",
+    //         },
+    //       }
+    //     );
+    //     const data = await response.json();
+    //     setCardData(data);
+    //   } catch (e) {
+    //     console.e("error fetching clause:", e);
+    //   }
+    // };
+    // fetchClause();
+    doAjax(
+      `/BDMServices/api/clause`,
+      "get",
+      {},
+      function (data) {
+        if (data) {
+          // console.log(data);
+          setCardData(data);
+        }
+        // setLoad(false);
+      },
+      (err) => {
+        // setLoad(false);
       }
-    };
-    fetchClause();
+    );
   }, []);
 
   const toReadableDate = (createdAt) => {

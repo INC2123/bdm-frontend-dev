@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setShowComments } from "../../redux/reducers/actions";
+import { setShowComments } from "../../redux/reducers/highlighterReducer";
 
 const useStyles = makeStyles((theme) => ({
   approval_comments: {
@@ -69,13 +69,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ApprovalComments(props) {
   const showComments = useSelector(
-    (state) => state.approvalComments.showComments
+    (state) => state.highlighterReducer.showComments
   );
   const isHighlighted = useSelector(
-    (state) => state.approvalComments.isHighlighted
+    (state) => state.highlighterReducer.isHighlighted
   );
   const commentCount = useSelector(
-    (state) => state.approvalComments.commentCount
+    (state) => state.highlighterReducer.commentCount
   );
   const dispatch = useDispatch();
   const classes = useStyles();

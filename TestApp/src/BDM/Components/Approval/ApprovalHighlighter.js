@@ -6,7 +6,7 @@ import {
   setShowComments,
   setIsHighlighted,
   setCommentCount,
-} from "../../redux/reducers/actions";
+} from "../../redux/reducers/highlighterReducer";
 
 function ApprovalHighlighter(props) {
   // const keycloak = useSelector((state) => state.keycloak.keycloak);
@@ -16,7 +16,7 @@ function ApprovalHighlighter(props) {
   const highlightedRef = useRef(null);
   const dispatch = useDispatch();
   const commentCount = useSelector(
-    (state) => state.approvalComments.commentCount
+    (state) => state.highlighterReducer.commentCount
   ); // Get comment count from Redux store
 
   const handleTextSelection = () => {

@@ -1,17 +1,23 @@
-// const initialState = {
-//   keycloak: null,
-// };
+import { createSlice } from "@reduxjs/toolkit";
 
-// const keycloakReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case "SET_KEYCLOAK":
-//       return {
-//         ...state,
-//         keycloak: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// };
+const initialState = {
+  token: "",
+  userDetails: "",
+};
 
-// export default keycloakReducer;
+export const keycloakReducer = createSlice({
+  name: "keycloakReducer",
+  initialState: initialState,
+  reducers: {
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
+    setUserDetails: (state, action) => {
+      state.userDetails = action.payload;
+    },
+  },
+});
+
+export const { setToken, setUserDetails } = keycloakReducer.actions;
+
+export default keycloakReducer.reducer;
