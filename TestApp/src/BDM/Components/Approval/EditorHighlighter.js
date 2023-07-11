@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditorHighlighter() {
+export default function EditorHighlighter(props) {
   const classes = useStyles();
   const text =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsjsdhfuj  hfuhfuf ajfhuifhuiaf uhfhuihfuahf ufuihfuihfuw ufhwuidfiowhdfow uhfihfahf fhhfiuafiuef fuhfhfiuf ufuifhuiff fuugwwuifwfuhf fuugfhuihfuwhf fuwfuwgfohwfhqwfh fwuhfiwhfowwhfowwf oifhwhfohfhhofh foihfoqhfywyfy fiwgfiohqwf8qw fwwugfiqwhfwfoqwoyyfwqyd fowhfiqwufuwufhww8fuwf iwhfeijfufiief foijafihwifjeuuhf ewofhiihfiehfieehf wwoifhwifhwiihfqif woiifhhqqwifowfh";

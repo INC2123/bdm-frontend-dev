@@ -3,22 +3,22 @@ import { Button } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   editor_btn_cancel: {
-    width: "7.5rem",
-    height: "2.25rem",
-    color: "#002D5D",
-    textTransform: "capitalize",
-    fontWeight: "400",
-    fontSize: "0.875rem",
+    width: "7.5rem !important",
+    height: "2.25rem !important",
+    color: "#002D5D !important",
+    textTransform: "capitalize !important",
+    fontWeight: "400 !important",
+    fontSize: "0.875rem !important",
   },
 
   editor_btn_send_approval: {
-    width: "9.375rem",
-    height: "2.25rem",
-    color: "#FFF",
-    textTransform: "capitalize",
-    fontWeight: "400",
-    fontSize: "0.875rem",
-    borderRadius: "0.25rem",
+    width: "9.375rem !important",
+    height: "2.25rem !important",
+    color: "#FFF !important",
+    textTransform: "capitalize !important",
+    fontWeight: "400 !important",
+    fontSize: "0.875rem !important",
+    borderRadius: "0.25rem !important",
     "&:hover ": {
       backgroundColor: "#082940 !important",
     },

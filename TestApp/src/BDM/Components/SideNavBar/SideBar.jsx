@@ -75,7 +75,7 @@ export default function SideBar() {
           <IconButton
             color="inherit"
             aria-label="home"
-            onClick={() => navigate("/EditorHighlighter")}
+            onClick={() => navigate("/EditorScreen")}
           >
             <AddCircleOutlineIcon />
           </IconButton>

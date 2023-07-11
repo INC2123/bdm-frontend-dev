@@ -8,6 +8,7 @@ import Card from "./BDM/Components/Workspace/Card";
 import MainComponent from "./BDM/Components/Workspace/MainComponent";
 import Workspace from "./BDM/Components/Workspace/Workspace";
 import ApprovalScreen from "./BDM/Components/Approval/ApprovalScreen";
+import EditorScreen from "./BDM/Components/Approval/EditorScreen";
 import CreateClause1 from "./BDM/Components/Clausecreation/CreateClause1";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditorHighlighter from "./BDM/Components/Approval/EditorHighlighter";
@@ -35,6 +36,11 @@ function App() {
                     path="/ApprovalScreen"
                     exact
                     element={<ApprovalScreen />}
+                  ></Route>
+                  <Route
+                    path="/EditorScreen"
+                    exact
+                    element={<EditorScreen />}
                   ></Route>
                   <Route
                     path="/EditorHighlighter"

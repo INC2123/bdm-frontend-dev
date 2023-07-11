@@ -1,7 +1,5 @@
 import { createTheme } from "@mui/material";
 
-import { makeStyles } from "@mui/styles";
-
 export const theme = createTheme({
   palette: {
     spacing: (factor) => `${0.5 * factor}rem`,
