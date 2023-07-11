@@ -1,230 +1,160 @@
-import React, { useState } from "react";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import ListItemText from "@mui/material/ListItemText";
-import Select from "@mui/material/Select";
-// import Checkbox from '@mui/material/Checkbox';
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import TextEditor from "./TextEditor";
-import Button from "@mui/material/Button";
-import { makeStyles } from "@mui/styles";
-// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-// import DatePicker from './DatePicker';
-import { Typography } from "@mui/material";
-import { convertToRaw } from "draft-js";
-
-// import '@fontsource/roboto/400.css';
-// import { Styled } from '@emotion/styled';
-// import { useTranslation } from 'react-i18next';
-
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-//       width: 250,
-//     },
-//   },
-// };
+import React,{ useState ,useEffect} from 'react';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import TextEditor from './TextEditor';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@mui/styles';
+import { Typography } from '@mui/material';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    width: 916,
-    height: "100vh",
   },
 
   container: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    marginLeft: 900,
-    maxWidth: 916,
-    maxHeight: 432,
     margin: "top 0px",
   },
-  header: {
-    "& .muiheader-root": {
-      marginTop: "1rem",
-      marginBottom: "2rem",
-      font: "Roboto",
-    },
-  },
-  clauseTitle: {
-    width: 412,
-    height: 44,
-    borderColor: "#646464",
-    border: "1px",
-    marginRight: 20,
-  },
 
+  box:{
+    marginRight:45
+
+  },
+  
   formControlM: {
-    width: 412,
+    width: 300,
     height: 44,
-    borderColor: "#646464",
-    marginBotttom: "2rem",
+    borderColor: '#646464',
   },
 
-  descriptionTextField: {
-    width: 415,
-    height: 44,
-    maxWidth: "100%",
-    borderColor: "#646464",
-    marginTop: "3rem",
-    marginBottom: "3rem",
-  },
   signatureSelect: {
     width: 412,
     height: 44,
-    borderColor: "#646464",
+    borderColor: '#646464',
+  },
+  
+  labelTextSpan: {
+    color: '#D83838',
   },
 
-  sendApprovalButton: {
-    backgroundColor: "#646464",
-    color: "white",
-    fontFamily: "Roboto",
-    fontStyle: "normal",
+  labelText: {
+    "& .muitypography-root":{
+    width: 80,
+    height: 16,
+    fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 14,
-    flex: "none",
-    order: 0,
-    flexGrow: 0,
-  },
-  labelTextSpan: {
-    color: "#D83838",
-  },
-  labelText: {
-    "& .muitypography-root": {
-      width: 80,
-      height: 16,
-      fontFamily: "Roboto",
-      fontWeight: 400,
-      fontSize: 14,
-      display: "flex",
-      alignItems: "center",
-      letterSpacing: "0.0025em",
-      color: "#1D1D11",
+    display: 'flex',
+    alignItems: 'center',
+    letterSpacing: '0.0025em',
+    color: '#1D1D11',
     },
   },
-  button: {
-    marginTop: "7rem",
-    marginLeft: 445,
+
+  button:{
+    marginTop:'7rem',
   },
 
-  textEditor: {
-    width: 916,
-    height: 230,
-    marginTop: "3rem",
-
-    outlineColor: "#002D5D",
+  textEditor:{
+    width:650,
+    height:150,
+    outlineColor: '#002D5D'
   },
 
-  astric: {
-    color: "#D83838",
+  astric:{
+    color:"#D83838"
   },
-  // date:{
-  //   "& .muiDatePicker-root":{
-  //      width:'251px',
-  //   }
-  // },
+  
 }));
 
 function CreateClause1() {
   const classes = useStyles();
+  // const CreateClause1 = () => {
 
-  const clauseTitles = [
-    "company policies",
-    "compensation",
-    "personal details",
-    "Clause D",
-  ];
-  const categories = ["Hr", "Appointment letter", "Offer letter", "category 4"];
-  const tags = ["tag 1 ", "tag 2 ", "tag 3", "tag 4"];
-  const signatures = ["1", "2", "3"];
-  const [selectedDate, setSelectedDate] = useState("");
-  // const contentState = editorState.getCurrentContent();
+  const categories = ['Hr', 'Appointment letter', 'Offer letter', 'category 4'];
+  const tags = ['tag 1 ', 'tag 2 ', 'tag 3', 'tag 4'];
 
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [tag, setTag] = useState("");
-  const [signature, setSignature] = useState("");
-  const [description, setDescription] = useState("");
+    const [category, setCategory] = useState('');
+    const [clauseTitle, setClauseTitle] = useState(''); 
+    const [description, setDescription] = useState('');
+    const [tag, setTag] = useState('');
+    const [signature, setSignature] = useState('');
+    const [editorContent, setEditorContent] = useState('');
 
-  const [textEditorContent, setTextEditorContent] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const payload = {
-      title,
-      category,
-      description,
-      tag,
-      signature,
-      textEditorContent,
-      // textEditorContent: textEditorContent.getCurrentContent().getPlainText('\u0001'),
+    const handleFormSubmit = (e) => {
+      e.preventDefault();
+    
+      // Construct the payload object
+      const payload = {
+        name: clauseTitle,
+        category: category,
+        description: description,
+        content: editorContent,
+        signature: [signature],
+        usedFor: [tag],
+      };
+    
+      // Make the API call
+      axios
+        .post("https://cw-bdm.cfapps.eu10-004.hana.ondemand.com/api/clause", payload, {
+          headers: {
+            Authorization: "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJJNExzTXlreEQ4czlXdFhOLUxaTXoxbDd3SmxfTmZmNGN5WkM5MEpZbklVIn0.eyJleHAiOjE2ODkwNjMzNTUsImlhdCI6MTY4OTA1NjE1NSwianRpIjoiNjRmMGY4OWQtMThkZS00NzVhLWIyYzktNTUxNTQ3ZjI4ZTZlIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5jaGVycnl3b3JrcHJvZHVjdHMuY29tL2F1dGgvcmVhbG1zL0RpZ2l0YWxBcHBsaWNhdGlvblN1aXRlIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjBkOGYxMGYzLWY3ODYtNDU1OS1iMGQzLTdmMTUzMWM5MDJjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6IndvcmthY2Nlc3MiLCJzZXNzaW9uX3N0YXRlIjoiMjQ3YTIwMTctY2RhNi00YmEyLTg3YzktNWZjNWFmMjUxOWFjIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3dvcmthY2Nlc3MtZnJvbnRlbmQuYXp1cmV3ZWJzaXRlcy5uZXQiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlVTRVJfREVGSU5JVElPTl9LRVlfdXNlci1hZG1pbiIsImRlZmF1bHQtcm9sZXMtaW50ZWxsaWdlbnQgdGFzayBtYW5hZ2VtZW50IiwiaXRtLWFkbWluIiwiYWNjZXNzLWlkbSIsIml0bS1kZWZhdWx0Iiwib2ZmbGluZV9hY2Nlc3MiLCJhY2Nlc3MtdGFzayIsImFjY2Vzcy1tb2RlbGVyIiwidW1hX2F1dGhvcml6YXRpb24iLCJhY2Nlc3MtYWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiIyNDdhMjAxNy1jZGE2LTRiYTItODdjOS01ZmM1YWYyNTE5YWMiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJTeXN0ZW0gVXNlciIsInBpZCI6IlAwMDA5OTkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoiZHVtbXkudG9rZW5AaW5jdHVyZS5jb20ifQ.kHwmLS-SjbxgeraqmCMFHadbPmCL2l8EvZWugL0dbFDv6f0UqYswXKIFYboaIiTXcD0sYnQJECykSkqJwfB7MZza16Dlz2ML0-JPdJ2sargiT7H5VUJj0hoHPcbRkhmDCL5Luehb50lUaXPReBpOjAkgR2wjeW0F_yHLj6oKUmL5F2dFoMxIEsxvLmlkX3fleeFMdbruv9eg2R9rHOLlWRfVCtBceYyCTFCcERSswasTQWIEMtfhvtUxM6eSrLHdqOdatgwA8jcK9GxtVpFsqUb0euIDxLMvU505B0VmMOQ_z60wrvp_tCEAJ80YUFNioxvDGPn-8TtklEmNy7Xo6A",
+          },
+        })
+        .then((response) => {
+          // Handle successful response
+          console.log("API response:", response.data);
+    
+          // Reset the form fields
+          setCategory("");
+          setClauseTitle("");
+          setDescription("");
+          setTag("");
+          setSignature("");
+          setEditorContent("");
+        })
+        .catch((error) => {
+          // Handle error
+          console.log("API error:", error);
+        });
     };
-    console.log("Payload:", payload);
-    // Reset form fields
-    setTitle("");
-    setCategory("");
-    setTag("");
-    setSignature("");
-    setDescription("");
-    setTextEditorContent("");
-  };
+    
 
-  // const handleDateChange = (event) => {
-  //   setSelectedDate(event.target.value);
-  // };
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleTagChange = (event) => {
-    setTag(event.target.value);
-  };
-
-  const handleSignatureChange = (event) => {
-    setSignature(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  return (
-    <div className={classes.pageContainer}>
-      <div className={classes.container}>
-        <h1 className={classes.header}>Create Clause</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <FormControl className={classes.clauseTitle}>
-              <Typography className={classes.labelText}>
-                Clause Title<span className={classes.astric}>*</span>
-              </Typography>
-              <Select id="title" value={title} onChange={handleTitleChange}>
-                <MenuItem value="">Select Clause Title</MenuItem>
-                {clauseTitles.map((titleOption) => (
-                  <MenuItem key={titleOption} value={titleOption}>
-                    {titleOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+    return (
+      <div className={classes.pageContainer}>
+        <div className={classes.container}>
+          <h2 className={classes.header}>Create Clause</h2>
+          <form >
+          <div style={{ display: "flex" }}>
+           <Box
+            className={classes.box}
+            component="form"
+            noValidate
+            autoComplete="off"
+            >
+            <Typography >
+                  Clause Title <span className={classes.astric}>*</span>
+            </Typography>
+            <TextField 
+            id="outlined-basic" 
+            variant="outlined"  
+            size="small"
+            style={{width:300}} 
+            value={clauseTitle}
+            onChange={(e) => setClauseTitle(e.target.value)}/>
+           </Box>
 
             <FormControl
               className={classes.formControlM}
-              style={{ marginLeft: "87px" }}
+              // style={{ marginLeft: "87px" }}
+              size="small"
             >
               <Typography className={classes.labelText}>
                 Category <span className={classes.astric}>*</span>
@@ -232,7 +162,7 @@ function CreateClause1() {
               <Select
                 id="category"
                 value={category}
-                onChange={handleCategoryChange}
+                onChange={(e) => setCategory(e.target.value)}
               >
                 <MenuItem value="">Select Category</MenuItem>
                 {categories.map((categoryOption) => (
@@ -242,115 +172,80 @@ function CreateClause1() {
                 ))}
               </Select>
             </FormControl>
-          </div>
-
-          <div>
-            <div style={{ display: "flex" }}>
-              <Box className={classes.descriptionTextField}>
-                <Typography className={classes.labelText}>
-                  Description
-                </Typography>
-                <TextField
-                  id="description"
-                  value={description}
-                  onChange={handleDescriptionChange}
-                  multiline
-                  className={classes.descriptionTextField}
-                />
-              </Box>
-
-              <FormControl
-                className={classes.formControlM}
-                style={{ marginLeft: "85px", marginTop: "3rem" }}
-              >
-                <Typography className={classes.labelText}>
-                  Tag <span className={classes.astric}>*</span>
-                </Typography>
-                <Select id="tag" value={tag} onChange={handleTagChange}>
-                  <MenuItem value="">Select Tag</MenuItem>
-                  {tags.map((tagOption) => (
-                    <MenuItem key={tagOption} value={tagOption}>
-                      {tagOption}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
             </div>
-          </div>
-
-          <div>
-            <div style={{ display: "flex" }}>
-              <FormControl
-                className={classes.formControl + " " + classes.signatureSelect}
-              >
-                <Typography className={classes.labelText}>
-                  Signature <span className={classes.astric}> *</span>
-                </Typography>
-                <Select
-                  id="signature"
-                  value={signature}
-                  onChange={handleSignatureChange}
+  
+              <div style={{ display: 'flex' }}>
+               <Box
+                 className={classes.box}
+                 component="form"
+                 noValidate
+                 autoComplete="off"
                 >
-                  <MenuItem value="">Select Signature</MenuItem>
-                  {signatures.map((signatureOption) => (
-                    <MenuItem key={signatureOption} value={signatureOption}>
-                      {signatureOption}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                <Typography>
+                  Description <span className={classes.astric}>*</span>
+                </Typography>
+                <TextField id="outlined-basic" variant="outlined"  size="small" style={{width:300}} value={description}
+                onChange={(e) => setDescription(e.target.value)}/>
+               </Box>
+  
+               <FormControl
+              className={classes.formControlM}
+              size="small"
+            >
+              <Typography className={classes.labelText}>
+                Tag <span className={classes.astric}>*</span>
+              </Typography>
+              <Select
+                id="tags"
+                value={tags}
+                onChange={(e) => setTag(e.target.value)}
+              >
+                <MenuItem value="">Select Category</MenuItem>
+                {tags.map((tagsOption) => (
+                  <MenuItem key={tagsOption} value={tagsOption}>
+                    {tagsOption}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+              </div>
 
-              {/* <div >
-              <DatePicker/>
-             </div> */}
-            </div>
+            {/* <div> */}
+            <div style={{ display: 'flex' }}>
+            <Box
+            component="form"
+            noValidate
+            autoComplete="off"
+            >
+              <Typography>Signature <span className={classes.astric}>*</span></Typography>
+            <TextField 
+            id="outlined-basic"
+            variant="outlined" 
+            size="small" 
+            style={{width:300}}
+            value={signature}
+            onChange={(e) => setSignature(e.target.value)}/>
+           </Box>
+           </div>
+          {/* </div> */}
+
+          <div className={classes.textEditor} >
+            <Typography className={classes.labelText}>Text Editor<span className={classes.astric}> *</span></Typography >
+            < TextEditor onContentChange={setEditorContent}/>
+
+          </div>
+      
+
+          <div className={classes.button} >
+            <Button variant="outlined" style={{marginRight:10,color:'#002D5D',borderColor:'#002D5D',font:'Roboto',marginLeft:260}} size="small">Cancel</Button>
+            <Button variant="outlined" style={{marginRight:10,color:'#002D5D',borderColor:'#002D5D'}} size="small">Save As Draft</Button>
+            <Button variant="contained" onClick={handleFormSubmit} style={{textColor:'white',background:'#002D5D'}} size="small">Send For Approval</Button>
           </div>
 
-          <div className={classes.textEditor}>
-            <Typography className={classes.labelText}>
-              Text Editor<span className={classes.astric}> *</span>
-            </Typography>
-            {/* <TextEditor
-              value={textEditorContent}
-              // onChange={handleTextEditorChange}
-            /> */}
-            <TextEditor onContentChange={setTextEditorContent} />
-          </div>
-
-          <div className={classes.button}>
-            <Button
-              variant="outlined"
-              style={{
-                marginRight: 20,
-                color: "#002D5D",
-                borderColor: "#002D5D",
-                font: "Roboto",
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="outlined"
-              style={{
-                marginRight: 20,
-                color: "#002D5D",
-                borderColor: "#002D5D",
-              }}
-            >
-              Save As Draft
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              style={{ textColor: "white", background: "#002D5D" }}
-            >
-              Send For Approval
-            </Button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-}
-
-export default CreateClause1;
+    );
+  };
+  
+  export default CreateClause1;
