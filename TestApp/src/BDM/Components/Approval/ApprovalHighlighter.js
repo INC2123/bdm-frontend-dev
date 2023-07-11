@@ -5,19 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setShowComments,
   setIsHighlighted,
-  setCommentCount,
 } from "../../redux/reducers/highlighterReducer";
 
 function ApprovalHighlighter(props) {
-  // const keycloak = useSelector((state) => state.keycloak.keycloak);
-
   const [highlightedTextList, setHighlightedTextList] = useState([]);
   const [showMessageButton, setShowMessageButton] = useState(false);
   const highlightedRef = useRef(null);
   const dispatch = useDispatch();
-  const commentCount = useSelector(
-    (state) => state.highlighterReducer.commentCount
-  ); // Get comment count from Redux store
 
   const handleTextSelection = () => {
     const selectedText = window.getSelection().toString().trim();
@@ -29,10 +23,7 @@ function ApprovalHighlighter(props) {
       setShowMessageButton(false);
     }
   };
-  // const handleHighlighterButtonClick = () => {
-  //   dispatch(setIsHighlighted(false));
-  //   dispatch(setCommentCount(props.commentButtonClickCount));
-  // };
+
   const handleOpenDialog = () => {
     if (highlightedTextList.length > 0) {
       highlightedTextList.forEach((highlightedText) => {

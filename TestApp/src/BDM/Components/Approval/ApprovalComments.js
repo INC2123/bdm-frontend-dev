@@ -74,9 +74,7 @@ export default function ApprovalComments(props) {
   const isHighlighted = useSelector(
     (state) => state.highlighterReducer.isHighlighted
   );
-  const commentCount = useSelector(
-    (state) => state.highlighterReducer.commentCount
-  );
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const handleCommentsClick = () => {

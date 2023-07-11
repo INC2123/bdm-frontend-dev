@@ -5,38 +5,35 @@ import ApprovalClauseBody from "./ApprovalClauseBody";
 import ApprovalComments from "./ApprovalComments";
 import { Stack } from "@mui/material";
 import ApproversButtons from "./ApproversButtons";
-import axios from "axios";
+import { doAjax } from "../../Services/serviceRequest";
 
 export default function ApprovalScreen() {
   const [highlightedTexts, setHighlightedTexts] = useState([]);
   const [comments, setComments] = useState([]);
   const [combinedObject, setCombinedObject] = useState({});
   const [approvalData, setApprovalData] = useState([]);
+  console.log(combinedObject);
 
-  // const getApprovalData = async () => {
-  //   const { approvalData } = await axios.get(
-  //     `https://cw-bdm.cfapps.eu10-004.hana.ondemand.com//api/clause/tasks/getTaskByAssignee`
-  //   );
-  //   setApprovalData(approvalData);
-  // };
-  // useEffect(() => {
-  //   getApprovalData();
-  // }, []);
-  console.log(approvalData);
+  useEffect(() => {
+    doAjax(
+      `/BDMServices/api/clause/tasks`,
+      "get",
+      {},
+      function (approvalData) {
+        if (approvalData) {
+          console.log(approvalData);
+          setApprovalData(approvalData);
+        }
+      },
+      (err) => {}
+    );
+  }, []);
+
   const handleReworkClick = () => {
     const data = highlightedTexts.map((text, index) => ({
       highlightedText: text,
       comment: comments[index],
     }));
-
-    // axios
-    //   .post("<your API endpoint>", data)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   };
 
   return (
